@@ -31,11 +31,11 @@ const MemberDashboard: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Welcome back, {user?.name}!</h1>
-        <p className="text-gray-600 mt-1">Here's your library activity overview</p>
+        <h1 className="text-4xl font-bold text-gray-900 tracking-tight">Welcome back, {user?.name}!</h1>
+        <p className="text-gray-600 mt-2 font-medium">Here's your library activity overview</p>
       </div>
 
       {/* Stats Grid */}
@@ -67,9 +67,9 @@ const MemberDashboard: React.FC = () => {
       </div>
 
       {/* Currently Borrowed Books */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Currently Borrowed Books</h2>
+      <div className="bg-white rounded-xl shadow-soft border border-gray-100">
+        <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-primary-50/50 to-white">
+          <h2 className="text-2xl font-bold text-gray-900">Currently Borrowed Books</h2>
         </div>
         <div className="p-6">
           {activeBorrows.length > 0 ? (
@@ -79,34 +79,34 @@ const MemberDashboard: React.FC = () => {
                 const isOverdue = daysUntilDue < 0;
                 
                 return (
-                  <div key={transaction.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div key={transaction.id} className="flex items-center justify-between p-5 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100 hover:shadow-soft transition-all duration-200">
                     <div className="flex-1">
-                      <h3 className="font-medium text-gray-900">{getBookTitle(transaction.bookId)}</h3>
+                      <h3 className="font-semibold text-gray-900 mb-1">{getBookTitle(transaction.bookId)}</h3>
                       <p className="text-sm text-gray-600">
                         Borrowed: {formatDate(transaction.borrowDate)}
                       </p>
                     </div>
                     <div className="text-right">
-                      <div className={`text-sm font-medium ${
+                      <div className={`text-sm font-bold mb-1 ${
                         isOverdue ? 'text-red-600' : daysUntilDue <= 3 ? 'text-amber-600' : 'text-emerald-600'
                       }`}>
                         {isOverdue 
-                          ? `Overdue by ${Math.abs(daysUntilDue)} days`
+                          ? `⚠ Overdue by ${Math.abs(daysUntilDue)} days`
                           : daysUntilDue === 0
-                          ? 'Due today'
-                          : `Due in ${daysUntilDue} days`
+                          ? '⏰ Due today'
+                          : `✓ Due in ${daysUntilDue} days`
                         }
                       </div>
-                      <p className="text-xs text-gray-500">Due: {formatDate(transaction.dueDate)}</p>
+                      <p className="text-xs text-gray-500 font-medium">Due: {formatDate(transaction.dueDate)}</p>
                     </div>
                   </div>
                 );
               })}
             </div>
           ) : (
-            <div className="text-center py-8">
-              <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No active borrows</h3>
+            <div className="text-center py-12">
+              <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No active borrows</h3>
               <p className="text-gray-600">Visit the book catalog to borrow your first book!</p>
             </div>
           )}
@@ -114,28 +114,28 @@ const MemberDashboard: React.FC = () => {
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200">
-        <div className="p-6 border-b border-gray-200">
-          <h2 className="text-xl font-semibold text-gray-900">Recent Activity</h2>
+      <div className="bg-white rounded-xl shadow-soft border border-gray-100">
+        <div className="p-6 border-b border-gray-100 bg-gradient-to-r from-primary-50/50 to-white">
+          <h2 className="text-2xl font-bold text-gray-900">Recent Activity</h2>
         </div>
         <div className="p-6">
           {userTransactions.length > 0 ? (
-            <div className="space-y-4">
+            <div className="space-y-3">
               {userTransactions
                 .sort((a, b) => new Date(b.borrowDate).getTime() - new Date(a.borrowDate).getTime())
                 .slice(0, 5)
                 .map(transaction => (
-                  <div key={transaction.id} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                  <div key={transaction.id} className="flex items-center justify-between p-4 bg-gradient-to-br from-gray-50 to-white rounded-xl border border-gray-100 hover:shadow-soft transition-all duration-200">
                     <div className="flex-1">
-                      <h3 className="font-medium text-gray-900">{getBookTitle(transaction.bookId)}</h3>
-                      <p className="text-sm text-gray-600">
+                      <h3 className="font-semibold text-gray-900">{getBookTitle(transaction.bookId)}</h3>
+                      <p className="text-sm text-gray-600 mt-0.5">
                         {transaction.status === 'borrowed' ? 'Borrowed' : 'Returned'} on {formatDate(transaction.borrowDate)}
                       </p>
                     </div>
-                    <div className={`px-3 py-1 rounded-full text-xs font-medium ${
+                    <div className={`px-3 py-1.5 rounded-lg text-xs font-semibold ${
                       transaction.status === 'borrowed' 
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-emerald-100 text-emerald-800'
+                        ? 'bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 border border-blue-200'
+                        : 'bg-gradient-to-r from-emerald-50 to-emerald-100 text-emerald-700 border border-emerald-200'
                     }`}>
                       {transaction.status === 'borrowed' ? 'Active' : 'Returned'}
                     </div>
@@ -143,9 +143,9 @@ const MemberDashboard: React.FC = () => {
                 ))}
             </div>
           ) : (
-            <div className="text-center py-8">
-              <Clock className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No activity yet</h3>
+            <div className="text-center py-12">
+              <Clock className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 mb-2">No activity yet</h3>
               <p className="text-gray-600">Your borrowing history will appear here</p>
             </div>
           )}

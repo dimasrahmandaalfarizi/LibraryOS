@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useLibrary } from '../context/LibraryContext';
 import { useAuth } from '../context/AuthContext';
 import BookCard from '../components/BookCard';
-import { Search, Filter, BookOpen } from 'lucide-react';
+import { Search, BookOpen } from 'lucide-react';
 
 const BookCatalog: React.FC = () => {
   const { books, borrowBook, searchBooks, filterBooks, getUserTransactions } = useLibrary();
@@ -72,31 +72,31 @@ const BookCatalog: React.FC = () => {
   const categories = [...new Set(books.map(book => book.category))];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-gray-900">Book Catalog</h1>
-        <p className="text-gray-600 mt-1">Discover and borrow books from our digital library</p>
+        <h1 className="text-4xl font-bold text-gray-900 tracking-tight">Book Catalog</h1>
+        <p className="text-gray-600 mt-2 font-medium">Discover and borrow books from our digital library</p>
       </div>
 
       {/* Search and Filter */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <div className="bg-white rounded-xl shadow-soft border border-gray-100 p-6">
         <div className="flex flex-col lg:flex-row gap-4">
           <div className="flex-1 relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
             <input
               type="text"
               placeholder="Search books by title, author, ISBN, or category..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input-base w-full pl-12"
             />
           </div>
           <div className="flex flex-col sm:flex-row gap-3">
             <select
               value={filterCategory}
               onChange={(e) => setFilterCategory(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input-base min-w-[160px]"
             >
               <option value="">All Categories</option>
               {categories.map(category => (
@@ -106,7 +106,7 @@ const BookCatalog: React.FC = () => {
             <select
               value={filterType}
               onChange={(e) => setFilterType(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input-base min-w-[140px]"
             >
               <option value="">All Types</option>
               <option value="physical">Physical</option>
@@ -115,7 +115,7 @@ const BookCatalog: React.FC = () => {
             <select
               value={filterAvailable}
               onChange={(e) => setFilterAvailable(e.target.value)}
-              className="px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input-base min-w-[140px]"
             >
               <option value="">All Books</option>
               <option value="available">Available</option>
@@ -127,8 +127,8 @@ const BookCatalog: React.FC = () => {
 
       {/* Results Summary */}
       <div className="flex items-center justify-between">
-        <p className="text-gray-600">
-          Showing {getFilteredBooks().length} of {books.length} books
+        <p className="text-gray-700 font-medium">
+          Showing <span className="font-bold text-gray-900">{getFilteredBooks().length}</span> of <span className="font-bold text-gray-900">{books.length}</span> books
         </p>
         {(searchQuery || filterCategory || filterType || filterAvailable) && (
           <button
@@ -138,7 +138,7 @@ const BookCatalog: React.FC = () => {
               setFilterType('');
               setFilterAvailable('');
             }}
-            className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+            className="text-primary-600 hover:text-primary-700 text-sm font-semibold transition-colors"
           >
             Clear filters
           </button>
@@ -158,10 +158,10 @@ const BookCatalog: React.FC = () => {
       </div>
 
       {getFilteredBooks().length === 0 && (
-        <div className="text-center py-12">
-          <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No books found</h3>
-          <p className="text-gray-600">
+        <div className="text-center py-16 bg-white rounded-xl shadow-soft border border-gray-100">
+          <BookOpen className="h-16 w-16 text-gray-300 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-gray-900 mb-2">No books found</h3>
+          <p className="text-gray-600 max-w-md mx-auto">
             {searchQuery || filterCategory || filterType || filterAvailable
               ? 'Try adjusting your search or filter criteria'
               : 'No books available in the catalog'

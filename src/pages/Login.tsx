@@ -43,19 +43,21 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-primary-50 via-blue-50 to-indigo-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center">
-            <BookOpen className="h-12 w-12 text-blue-600" />
-            <span className="ml-3 text-3xl font-bold text-gray-900">LibraryOS</span>
+          <div className="inline-flex items-center justify-center">
+            <div className="p-3 bg-gradient-to-br from-primary-600 to-primary-700 rounded-2xl shadow-soft-lg">
+              <BookOpen className="h-10 w-10 text-white" />
+            </div>
           </div>
-          <p className="mt-2 text-gray-600">Digital Library Management System</p>
+          <h1 className="mt-4 text-4xl font-bold text-gray-900 tracking-tight">LibraryOS</h1>
+          <p className="mt-2 text-gray-600 font-medium">Digital Library Management System</p>
         </div>
 
         {/* Form Card */}
-        <div className="bg-white rounded-2xl shadow-xl p-8">
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-soft-xl border border-white p-8">
           <div className="mb-6">
             <h2 className="text-2xl font-bold text-gray-900 text-center">
               {isLoginMode ? 'Welcome Back' : 'Create Account'}
@@ -66,15 +68,15 @@ const Login: React.FC = () => {
           </div>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-lg">
-              <p className="text-red-600 text-sm">{error}</p>
+            <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-xl">
+              <p className="text-red-700 text-sm font-medium">{error}</p>
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-5">
             {!isLoginMode && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Full Name</label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                   <input
@@ -82,7 +84,7 @@ const Login: React.FC = () => {
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="input-base w-full pl-11"
                     placeholder="Enter your full name"
                   />
                 </div>
@@ -90,7 +92,7 @@ const Login: React.FC = () => {
             )}
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
@@ -98,14 +100,14 @@ const Login: React.FC = () => {
                   required
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="input-base w-full pl-11"
                   placeholder="Enter your email"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <label className="block text-sm font-semibold text-gray-700 mb-2">Password</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
                 <input
@@ -113,13 +115,13 @@ const Login: React.FC = () => {
                   required
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="input-base w-full pl-11 pr-12"
                   placeholder="Enter your password"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                 >
                   {showPassword ? <EyeOff className="h-5 w-5" /> : <Eye className="h-5 w-5" />}
                 </button>
@@ -128,11 +130,11 @@ const Login: React.FC = () => {
 
             {!isLoginMode && (
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Role</label>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">Role</label>
                 <select
                   value={formData.role}
                   onChange={(e) => setFormData({ ...formData, role: e.target.value as 'admin' | 'member' })}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="input-base w-full"
                 >
                   <option value="member">Member</option>
                   <option value="admin">Admin</option>
@@ -143,7 +145,7 @@ const Login: React.FC = () => {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full bg-gradient-to-r from-primary-600 to-primary-700 text-white py-3.5 px-4 rounded-xl font-semibold hover:from-primary-700 hover:to-primary-800 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-all duration-200 shadow-soft hover:shadow-soft-md"
             >
               {isLoading ? 'Processing...' : (isLoginMode ? 'Sign In' : 'Create Account')}
             </button>
@@ -154,7 +156,7 @@ const Login: React.FC = () => {
               {isLoginMode ? "Don't have an account? " : 'Already have an account? '}
               <button
                 onClick={toggleMode}
-                className="text-blue-600 hover:text-blue-700 font-medium"
+                className="text-primary-600 hover:text-primary-700 font-semibold transition-colors"
               >
                 {isLoginMode ? 'Sign up' : 'Sign in'}
               </button>
@@ -162,11 +164,20 @@ const Login: React.FC = () => {
           </div>
 
           {/* Demo Accounts */}
-          <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm font-medium text-gray-700 mb-2">Demo Accounts:</p>
-            <div className="text-xs text-gray-600 space-y-1">
-              <p><strong>Admin:</strong> admin@library.com / password</p>
-              <p><strong>Member:</strong> member@library.com / password</p>
+          <div className="mt-6 p-5 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl border border-gray-200">
+            <p className="text-sm font-semibold text-gray-700 mb-3 flex items-center">
+              <span className="inline-block w-2 h-2 bg-emerald-500 rounded-full mr-2"></span>
+              Demo Accounts
+            </p>
+            <div className="text-xs text-gray-600 space-y-2">
+              <p className="flex items-center justify-between p-2 bg-white rounded-lg">
+                <strong className="text-gray-700">Admin:</strong>
+                <span className="font-mono">admin@library.com / password</span>
+              </p>
+              <p className="flex items-center justify-between p-2 bg-white rounded-lg">
+                <strong className="text-gray-700">Member:</strong>
+                <span className="font-mono">member@library.com / password</span>
+              </p>
             </div>
           </div>
         </div>
